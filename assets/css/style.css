@@ -1,0 +1,36 @@
+h1 {
+    color: whitesmoke;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+header {
+    background-image: linear-gradient(to right, rgb(97, 97, 255), rgb(34, 0, 114));
+    text-align: center;
+}
+
+main {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+#searchCity {
+    margin: 0 30px;
+}
+
+#fiveDays {
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 750px) {
+    main {
+        flex-direction: column;
+    }
+
+    #titleFiveDays {
+        padding-left: 30px;
+    }
+    
+}
