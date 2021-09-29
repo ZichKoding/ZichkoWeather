@@ -16,14 +16,43 @@ main {
     justify-content: space-around;
 }
 
+h2, h4 {
+    font-weight: bold;
+}
+
+#main {
+    width: 100%;
+}
+
 #searchCity {
     margin: 0 30px;
+}
+
+#search {
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.searchBtn {
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(109, 109, 109));
+
+}
+
+#searching {
+    border-bottom: solid 5px gray;
 }
 
 #fiveDays {
     justify-content: space-between;
 }
 
+.dayForecast {
+    background-color: rgb(39, 50, 83);
+    color: whitesmoke;
+}
 @media only screen and (max-width: 750px) {
     main {
         flex-direction: column;
