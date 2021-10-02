@@ -400,7 +400,8 @@ $("#previBtn5").click(function() {
 });
 
 if (storeKey === 0) {
-    userSearch = "Orlando, Florida";
+    userSearch = "Orlando";
     let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
     makingWeatherCall(curWeatherAPI);
+
 }
