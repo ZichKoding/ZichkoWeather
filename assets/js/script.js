@@ -1,7 +1,7 @@
 // variables
 let myAPIWeatherKey = "&units=imperial&APPID=a15f02adbde7a78309af009d972b4360";
 let userSearch = "";
-let storeKey = 0;
+let storeKey = localStorage.length;
 
 // all ids for the 5 day forecast
 let dayOneItems = [
@@ -54,7 +54,6 @@ function makingWeatherCall(weather) {
     fetch(weather)
     .then(response => response.json())
     .then(function(data) {
-        console.log(data);
         
         // Pull the lattitude and longitude and use that to make a onecall
         // to openweathermap to get current and future forecasts.
@@ -62,8 +61,6 @@ function makingWeatherCall(weather) {
         fetch(oneCallAPI)
         .then(response => response.json())
         .then(function(data) {
-            console.log(data);
-
             // Display current temp
             let currentTemp = Math.round(data.current.temp);
             $("#curDayTemp").text(currentTemp + "*F");
@@ -77,7 +74,23 @@ function makingWeatherCall(weather) {
             $("#curDayHumid").text(curHumid + "%");
 
             // Display current UV index
-            let curUV = Math.round(data.current.uvi);
+            let curUV = data.current.uvi;
+            // color coding based on the intensity of the UV Index
+            if (curUV < 3) {
+                $("#curDayUV").css("background-color", "rgb(0,150,0)");
+            }
+            else if (curUV >=3 && curUV < 6) {
+                $("#curDayUV").css("background-color", "rgb(196, 196, 23)");
+            }
+            else if (curUV >= 6 && curUV < 8) {
+                $("#curDayUV").css("background-color", "rgb(196, 92, 23)");
+            }
+            else if (curUV >= 8 && curUV < 11) {
+                $("#curDayUV").css("background-color", "rgb(175, 0, 0)");
+            }
+            else if (curUV >= 11) {
+                $("#curDayUV").css("background-color", "rgb(121, 0, 40)");
+            }
             $("#curDayUV").text(curUV);
 
             // for loop through index 0 - 4
@@ -236,7 +249,6 @@ function makingWeatherCall(weather) {
         fetch(reversed)
         .then(response => response.json())
         .then(function(data) {
-            console.log(data);
             let city = data[0].name;
             let state = data[0].state;
             $("#currentCityDate").text("");
@@ -279,15 +291,38 @@ function futureDates(nthDays) {
 function previData() {
     if (localStorage.length > 0){
         userSearch = localStorage.getItem(localStorage.length - 1 );
-        console.log(userSearch);
+        userSearch = userSearch.replace('"', "");
+        userSearch = userSearch.replace('"', '');
         let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
-        console.log(curWeatherAPI);
         makingWeatherCall(curWeatherAPI);
+        previBtns();
     }
     else {
         console.log("There is no recent search history");
     }
 };
+
+function previBtns() {
+    // loop through local storage and create buttons for the 5 most recent searches
+    for (let i = 0; i <= localStorage.length; i++) {
+        // button creation
+        let previBtn = $("<button></button>");
+        // variable to hold the code to retrieve the most recent items
+        let previ = localStorage.getItem(localStorage.length - i);
+        // i has to be greater than 0 or else its going to be undefined since the length is one number larger than the final index spot
+        // i has to be less than 6 so there can only be 5 buttons at most.
+        if (i > 0 && i < 6) {
+            // the next two lines of code are to get rid of the quotations.
+            previ = previ.replace('"',"");
+            previ = previ.replace('"',"");
+            // add the value of the localStorage to the button text
+            previBtn.text(previ);
+            previBtn.addClass("previBtns");
+            previBtn.attr("id", "previBtn"+i);
+            $("#previousSearch").append(previBtn);
+        }
+    }
+}
 
 previData();
 
@@ -299,6 +334,67 @@ $(".searchBtn").click(function() {
 
     // setting search value in local storage
     localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
     storeKey++;
 });
 
+console.log($("#previousSearch").children()[0]);
+console.log($("#previousSearch").children()[1]);
+console.log($("#previousSearch").children()[2]);
+console.log($("#previousSearch").children()[3]);
+console.log($("#previousSearch").children()[4]);
+
+$("#previBtn1").click(function() {
+    userSearch = $(this).text();
+    let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
+    makingWeatherCall(curWeatherAPI);
+
+    // setting search value in local storage
+    localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
+    storeKey++;
+});
+
+$("#previBtn2").click(function() {
+    userSearch = $(this).text();
+    let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
+    makingWeatherCall(curWeatherAPI);
+
+    // setting search value in local storage
+    localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
+    storeKey++;
+});
+
+$("#previBtn3").click(function() {
+    userSearch = $(this).text();
+    let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
+    makingWeatherCall(curWeatherAPI);
+
+    // setting search value in local storage
+    localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
+    storeKey++;
+});
+
+$("#previBtn4").click(function() {
+    userSearch = $(this).text();
+    let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
+    makingWeatherCall(curWeatherAPI);
+
+    // setting search value in local storage
+    localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
+    storeKey++;
+});
+
+$("#previBtn5").click(function() {
+    userSearch = $(this).text();
+    let curWeatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + userSearch + myAPIWeatherKey;
+    makingWeatherCall(curWeatherAPI);
+
+    // setting search value in local storage
+    localStorage.setItem(storeKey, JSON.stringify(userSearch));
+    location.reload();
+    storeKey++;
+});
